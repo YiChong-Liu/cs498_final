@@ -130,4 +130,14 @@ http://localhost:3000/api/most-active-user
 
 **What it does:** Returns the user who has posted the most tweets in total.
 
-## 
+
+
+###  5. Top Hashtags
+
+**URL:**
+
+```
+http://localhost:3000/api/top-hashtags
+```
+
+**What it does:** Returns the most frequently used hashtags across all tweets. If a tweet includes multiple hashtags, each one is counted. By default, returns the top 100.

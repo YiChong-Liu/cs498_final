@@ -118,11 +118,30 @@ router.get("/most-active-user", async (req, res) => {
 
 
 // API #5: /api/top-hashtags
+router.get("/top-hashtags", async (req, res) => {
+    const db = mongoUtil.getDb();
 
+    try {
+        const pipeline = [];
 
+        pipeline.push({ $unwind: "$hashtags" });
+        pipeline.push({ $group: { _id: "$hashtags", count: { $sum: 1 } } });
+        pipeline.push({ $sort: { count: -1 } });
+        pipeline.push({ $limit: 100 });
 
+        // Question:what happens if the number of target hashtags < 100?
 
+        const top_list_hashtag = await db.collection("tweets").aggregate(pipeline).toArray();
 
+        res.json(top_list_hashtag.map(tag => ({
+            hashtag: tag._id,
+            count: tag.count
+        })));
+    } catch (err) {
+        console.error("Something wrong while fetching hashtags:", err);
+        res.status(500).json({ error: "Internal server error (hashtag analysis failed)" });
+    }
+});
 
 
 // API #6: /api/three-user-cycles
