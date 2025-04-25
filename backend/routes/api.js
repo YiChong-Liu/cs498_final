@@ -86,13 +86,35 @@ router.get("/most-active-country", async (req, res) => {
 });
 
 
-
 // API #4: /api/most-active-user
 
+// 查询推文最多的用户
+router.get("/most-active-user", async (req, res) => {
+    const db = mongoUtil.getDb();
 
+    try {
+        // count how many times the name appears
+        const result = await db.collection("tweets").aggregate([
+            { $group: { _id: "$user.screen_name", tweet_count: { $sum: 1 } } },
+            // 排序
+            { $sort: { tweet_count: -1 } },
+            //return the first result
+            { $limit: 1 }
+        ]).toArray();
 
+        if (result.length === 0) {
+            return res.status(404).json({ message: "No users found." });
+        }
 
-
+        res.json({
+            user_screen_name: result[0]._id,
+            tweet_count: result[0].tweet_count
+        });
+    } catch (err) {
+        console.error("Error: cannot find most active user", err);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
 
 
 // API #5: /api/top-hashtags

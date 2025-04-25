@@ -117,3 +117,17 @@ http://localhost:3000/api/most-active-country
 ```
 
 **What it does:** Returns the country with the highest number of tweets, based on the `place_country` field in the dataset (could be null).
+
+
+
+### 4. Most Active User
+
+**URL:**
+
+```
+http://localhost:3000/api/most-active-user
+```
+
+**What it does:** Returns the user who has posted the most tweets in total.
+
+## 
