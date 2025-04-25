@@ -105,3 +105,15 @@ http://localhost:3000/api/thread-by-user?screen_name=Calciferex
 **What it does:** Returns all reply tweets by the given user, ordered by time.
 
 Make sure to use a name that actually has replies (e.g., Calciferex).
+
+
+
+### 3. Most Active Country
+
+**URL:**
+
+```
+http://localhost:3000/api/most-active-country
+```
+
+**What it does:** Returns the country with the highest number of tweets, based on the `place_country` field in the dataset (could be null).

@@ -48,13 +48,42 @@ router.get("/thread-by-user", async (req, res) => {
 });
 
 
-
-
-
 // API #3: /api/most-active-country
 
+// 查询拥有最多推文的国家
+router.get("/most-active-country", async (req, res) => {
+    const db = mongoUtil.getDb();
 
+    try {
+        const result = await db.collection("tweets").aggregate([
+            // filter掉没有国家信息的推文（place_country 为 null）
+            { $match: { place_country: { $ne: null } } },
 
+            // 按国家进行分组，并统计每个国家的推文数量
+            { $group: { _id: "$place_country", tweet_count: { $sum: 1 } } },
+
+            // 按 tweet_count 倒序排序，数量最多的排最前
+            { $sort: { tweet_count: -1 } },
+
+            // 只返回数量最多的那个国家
+            { $limit: 1 }
+        ]).toArray();
+
+        // 如果找不到任何国家（少见），返回提示
+        if (result.length === 0) {
+            return res.status(404).json({ message: "failed to find tweet data" });
+        }
+
+        // 返回国家名称和推文数量
+        res.json({
+            country: result[0]._id,
+            tweet_count: result[0].tweet_count
+        });
+    } catch (err) {
+        console.error("Failed to find the country:", err);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
 
 
 
