@@ -141,3 +141,13 @@ http://localhost:3000/api/top-hashtags
 ```
 
 **What it does:** Returns the most frequently used hashtags across all tweets. If a tweet includes multiple hashtags, each one is counted. By default, returns the top 100.
+
+
+
+**Update:** the limit can now be manually set as well. for example:
+
+```
+http://localhost:3000/api/top-hashtags?limit=3
+```
+
+It will display the top 3.
