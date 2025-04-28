@@ -55,7 +55,7 @@ router.get("/most-active-country", async (req, res) => {
     const db = mongoUtil.getDb();
 
     try {
-        const result = await db.collection("tweets").aggregate([
+        const percentage = await db.collection("tweets").aggregate([
             // filter掉没有国家信息的推文（place_country 为 null）
             { $match: { place_country: { $ne: null } } },
 
@@ -158,7 +158,7 @@ router.get("/three-user-cycles", async (req, res) => {
     try {
         let replyGroup = await db.collection("tweets").find({
             in_reply_to_screen_name: { $ne: null }
-        }).toArray(); 
+        }).toArray();
         // console.log("number of tweets which have replies", replyGroup.length);
         let reply_pair = {}; // 存 (A -> B)
 
@@ -166,7 +166,7 @@ router.get("/three-user-cycles", async (req, res) => {
             let tweet = replyGroup[index];
             let start = tweet.user?.screen_name;
             let end = tweet.in_reply_to_screen_name;
-            
+
             // 名字不为空
             if (start && end) {
                 if (!reply_pair[start]) {
@@ -204,15 +204,65 @@ router.get("/three-user-cycles", async (req, res) => {
 });
 
 
-
-
-
 // API #7: /api/verified-user-engagement
+router.get("/verified-user-engagement", async (req, res) => {
+    const db = mongoUtil.getDb();
 
+    try {
+        let tweets = await db.collection("tweets").find({
+            "user.verified": true
+        }).toArray();
 
+        let count = {};
 
+        for (let i = 0; i < tweets.length; i++) {
+            let t = tweets[i];
+            let user = t.user?.screen_name;
+            if (user) {
+                // 归零
+                if (!count[user]) {
+                    count[user] = { original: 0, reply: 0, retweet: 0 };
+                }
 
+                if (t.is_retweet) {
+                    count[user].retweet += 1;
+                } else if (t.in_reply_to_status_id) {
+                    count[user].reply += 1;
+                } else {
+                    count[user].original += 1;
+                }
+            }
+        }
 
+        let percentage = [];
 
+        for (let u in count) {
+            let total = count[u].original + count[u].reply + count[u].retweet;
+            if (total === 0) continue;
+
+            // calculate the result percentage
+            let original = count[u].original / total;
+            let reply = count[u].reply / total;
+            let retweet = count[u].retweet / total;
+            
+            // format the percentage
+            let original_percentage = Math.round(original * 100) + "%";
+            let reply_percentage = Math.round(reply * 100) + "%";
+            let retweet_percentage = Math.round(retweet * 100) + "%";
+
+            percentage.push({
+                user: u,
+                original_percentage,
+                reply_percentage,
+                retweet_percentage
+            });
+        }
+
+        res.json(percentage);
+    } catch (e) {
+        console.error("error", e);
+        res.status(500).json({ error: "internal server error" });
+    }
+});
 
 module.exports = router;

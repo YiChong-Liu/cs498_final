@@ -161,3 +161,14 @@ It will display the top 3.
 ```
 http://localhost:3000/api/three-user-cycles
 ```
+
+
+
+### 7. Verified User Engagement
+
+**URL:**
+
+```
+http://localhost:3000/api/verified-user-engagement
+```
+
