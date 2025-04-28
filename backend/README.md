@@ -6,7 +6,7 @@ This guide walks you through how to set up and test the backend server for our C
 
 ------
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 cs498_final/
@@ -21,7 +21,7 @@ cs498_final/
 
 ------
 
-## 🛠️ Step-by-Step Setup
+## Step-by-Step Setup
 
 ### 1. Clone the Repo
 
@@ -68,7 +68,7 @@ Server running on http://localhost:3000
 
 ------
 
-## 🔌 API Endpoints
+## API Endpoints
 
 ### 1. Test Connection
 
@@ -151,3 +151,13 @@ http://localhost:3000/api/top-hashtags?limit=3
 ```
 
 It will display the top 3.
+
+
+
+### 6. Three User Cycles
+
+**URL:**
+
+```
+http://localhost:3000/api/three-user-cycles
+```

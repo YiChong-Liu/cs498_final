@@ -145,6 +145,64 @@ router.get("/top-hashtags", async (req, res) => {
 
 // API #6: /api/three-user-cycles
 
+/**
+ * A->B 与 B->A
+ * A->C 与 C->A
+ * B->C 与 C->B
+ * => cycle!
+ */
+
+router.get("/three-user-cycles", async (req, res) => {
+    const db = mongoUtil.getDb();
+
+    try {
+        let replyGroup = await db.collection("tweets").find({
+            in_reply_to_screen_name: { $ne: null }
+        }).toArray(); 
+        // console.log("number of tweets which have replies", replyGroup.length);
+        let reply_pair = {}; // 存 (A -> B)
+
+        for (let index = 0; index < replyGroup.length; index++) {
+            let tweet = replyGroup[index];
+            let start = tweet.user?.screen_name;
+            let end = tweet.in_reply_to_screen_name;
+            
+            // 名字不为空
+            if (start && end) {
+                if (!reply_pair[start]) {
+                    reply_pair[start] = new Set();
+                }
+                reply_pair[start].add(end);
+            }
+        }
+
+        let users = Object.keys(reply_pair);
+        // console.log("number of users" + users.length);
+        let cycles = [];
+        // brute force:any better solutions?
+        for (let i = 0; i < users.length; i++) {
+            for (let j = i + 1; j < users.length; j++) {
+                for (let k = j + 1; k < users.length; k++) {
+                    let A = users[i], B = users[j], C = users[k];
+
+                    if (
+                        reply_pair[A]?.has(B) && reply_pair[B]?.has(A) &&
+                        reply_pair[B]?.has(C) && reply_pair[C]?.has(B) &&
+                        reply_pair[A]?.has(C) && reply_pair[C]?.has(A)
+                    ) {
+                        cycles.push({ A, B, C });
+                    }
+                }
+            }
+        }
+        // console.log("number of cycles" + cycles.length);
+        res.json(cycles);
+    } catch (e) {
+        console.error("error", e);
+        res.status(500).json({ error: "internal server error" });
+    }
+});
+
 
 
 
