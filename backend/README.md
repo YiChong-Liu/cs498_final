@@ -63,7 +63,7 @@ node server.js
 You should see something like:
 
 ```
-Server running on http://localhost:3000
+Server running on http://localhost:5000
 ```
 
 ------
@@ -72,7 +72,7 @@ Server running on http://localhost:3000
 
 ### 1. Test Connection
 
-**URL:** `http://localhost:3000/api/test`
+**URL:** `http://localhost:5000/api/test`
 
 **Expected Response:**
 
@@ -91,7 +91,7 @@ Server running on http://localhost:3000
 **URL Format:**
 
 ```
-http://localhost:3000/api/thread-by-user?screen_name=<username>
+http://localhost:5000/api/thread-by-user?screen_name=<username>
 ```
 
 **Example:**
@@ -99,7 +99,7 @@ http://localhost:3000/api/thread-by-user?screen_name=<username>
 ![an example](img/example.jpg)
 
 ```
-http://localhost:3000/api/thread-by-user?screen_name=Calciferex
+http://localhost:5000/api/thread-by-user?screen_name=Calciferex
 ```
 
 **What it does:** Returns all reply tweets by the given user, ordered by time.
@@ -113,7 +113,7 @@ Make sure to use a name that actually has replies (e.g., Calciferex).
 **URL:**
 
 ```
-http://localhost:3000/api/most-active-country
+http://localhost:5000/api/most-active-country
 ```
 
 **What it does:** Returns the country with the highest number of tweets, based on the `place_country` field in the dataset (could be null).
@@ -125,7 +125,7 @@ http://localhost:3000/api/most-active-country
 **URL:**
 
 ```
-http://localhost:3000/api/most-active-user
+http://localhost:5000/api/most-active-user
 ```
 
 **What it does:** Returns the user who has posted the most tweets in total.
@@ -137,7 +137,7 @@ http://localhost:3000/api/most-active-user
 **URL:**
 
 ```
-http://localhost:3000/api/top-hashtags
+http://localhost:5000/api/top-hashtags
 ```
 
 **What it does:** Returns the most frequently used hashtags across all tweets. If a tweet includes multiple hashtags, each one is counted. By default, returns the top 100.
@@ -147,7 +147,7 @@ http://localhost:3000/api/top-hashtags
 **Update:** the limit can now be manually set as well. for example:
 
 ```
-http://localhost:3000/api/top-hashtags?limit=3
+http://localhost:5000/api/top-hashtags?limit=3
 ```
 
 It will now display the top 3 hashtags.
@@ -159,7 +159,7 @@ It will now display the top 3 hashtags.
 **URL:**
 
 ```
-http://localhost:3000/api/three-user-cycles
+http://localhost:5000/api/three-user-cycles
 ```
 
 **What it does:** Finds groups of three users (A, B, C) such that:
@@ -173,7 +173,7 @@ http://localhost:3000/api/three-user-cycles
 **URL:**
 
 ```
-http://localhost:3000/api/verified-user-engagement
+http://localhost:5000/api/verified-user-engagement
 ```
 
 **What it does:** For each verified user, calculates the percentage of their tweets that are:
