@@ -55,7 +55,7 @@ router.get("/most-active-country", async (req, res) => {
     const db = mongoUtil.getDb();
 
     try {
-        const percentage = await db.collection("tweets").aggregate([
+        const result = await db.collection("tweets").aggregate([
             // filter掉没有国家信息的推文（place_country 为 null）
             { $match: { place_country: { $ne: null } } },
 
@@ -159,7 +159,7 @@ router.get("/three-user-cycles", async (req, res) => {
         let replyGroup = await db.collection("tweets").find({
             in_reply_to_screen_name: { $ne: null }
         }).toArray();
-        // console.log("number of tweets which have replies", replyGroup.length);
+        console.log("number of tweets which have replies", replyGroup.length);
         let reply_pair = {}; // 存 (A -> B)
 
         for (let index = 0; index < replyGroup.length; index++) {
@@ -177,7 +177,7 @@ router.get("/three-user-cycles", async (req, res) => {
         }
 
         let users = Object.keys(reply_pair);
-        // console.log("number of users" + users.length);
+        console.log("number of users" + users.length);
         let cycles = [];
         // brute force:any better solutions?
         for (let i = 0; i < users.length; i++) {
@@ -195,7 +195,7 @@ router.get("/three-user-cycles", async (req, res) => {
                 }
             }
         }
-        // console.log("number of cycles" + cycles.length);
+        console.log("number of cycles" + cycles.length);
         res.json(cycles);
     } catch (e) {
         console.error("error", e);

@@ -150,7 +150,7 @@ http://localhost:3000/api/top-hashtags
 http://localhost:3000/api/top-hashtags?limit=3
 ```
 
-It will display the top 3.
+It will now display the top 3 hashtags.
 
 
 
@@ -162,7 +162,11 @@ It will display the top 3.
 http://localhost:3000/api/three-user-cycles
 ```
 
+**What it does:** Finds groups of three users (A, B, C) such that:
 
+- A replied to B and B replied to A
+- A replied to C and C replied to A
+- B replied to C and C replied to B
 
 ### 7. Verified User Engagement
 
@@ -172,3 +176,8 @@ http://localhost:3000/api/three-user-cycles
 http://localhost:3000/api/verified-user-engagement
 ```
 
+**What it does:** For each verified user, calculates the percentage of their tweets that are:
+
+- Original tweets
+- Replies
+- Retweets
