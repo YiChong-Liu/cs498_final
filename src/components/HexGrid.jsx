@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react';
 import FeatureCard from './FeatureCard';
 import ThreadByUser from './ThreadByUser';
 import MostActiveCountry from './MostActiveCountry';
+import MostActiveUser from './MostActiveUser';
+import VerifiedUserEngagement from './VerifiedUserEngagement';
 
 const features = [
   { id: 'thread', label: 'Thread by User', component: <ThreadByUser />, input: true },
   { id: 'country', label: 'Most Active Country', component: <MostActiveCountry />, input: false },
-  { id: 'user', label: 'Most Active User', component: <ThreadByUser />, input: false },
+  { id: 'user', label: 'Most Active User', component: <MostActiveUser />, input: false },
   { id: 'hashtags', label: 'Top Hashtags', component: <ThreadByUser />, input: true },
   { id: 'cycles', label: 'User Reply Cycles', component: <ThreadByUser />, input: false },
-  { id: 'engagement', label: 'Verified Engagement', component: <ThreadByUser />, input: false },
+  { id: 'engagement', label: 'Verified Engagement', component: <VerifiedUserEngagement />, input: false },
 ];
 
 export default function HexGrid() {
