@@ -1,25 +1,19 @@
+// src/components/HexGrid.jsx
 import React, { useEffect, useState } from 'react';
 import FeatureCard from './FeatureCard';
 import ThreadByUser from './ThreadByUser';
 import MostActiveCountry from './MostActiveCountry';
 import MostActiveUser from './MostActiveUser';
-import VerifiedUserEngagement from './VerifiedUserEngagement';
-import UserReplyCycles from './ThreeUserCycles';
 import TopHashtags from './TopHashtags';
-const features = [
-  { id: 'thread', label: 'Thread by User', component: <ThreadByUser />, input: true },
-  { id: 'country', label: 'Most Active Country', component: <MostActiveCountry />, input: false },
-  { id: 'user', label: 'Most Active User', component: <MostActiveUser />, input: false },
-  { id: 'hashtags', label: 'Top Hashtags', component: <TopHashtags />, input: true },
-  { id: 'cycles', label: 'User Reply Cycles', component: <UserReplyCycles />, input: false },
-  { id: 'engagement', label: 'Verified Engagement', component: <VerifiedUserEngagement />, input: false },
-];
+import UserReplyCycles from './ThreeUserCycles';
+import VerifiedUserEngagement from './VerifiedUserEngagement';
 
 export default function HexGrid() {
   const [activeCard, setActiveCard] = useState(null);
   const [rotation, setRotation] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
+  // 让六边形持续旋转
   useEffect(() => {
     if (isPaused) return;
     const interval = setInterval(() => {
@@ -31,6 +25,52 @@ export default function HexGrid() {
   const handleCardClick = (id) => {
     setActiveCard(id === activeCard ? null : id);
   };
+
+  // 在这里为每个卡片增加 description 提示
+  const features = [
+    {
+      id: 'thread',
+      label: 'Thread by User',
+      component: <ThreadByUser />,
+      input: true,
+      description: 'Shows all reply tweets from a specific user, ordered by time.'
+    },
+    {
+      id: 'country',
+      label: 'Most Active Country',
+      component: <MostActiveCountry />,
+      input: false,
+      description: 'Displays the country with the most tweets using the place_country field.'
+    },
+    {
+      id: 'user',
+      label: 'Most Active User',
+      component: <MostActiveUser />,
+      input: false,
+      description: 'Finds the user who posted the most tweets overall.'
+    },
+    {
+      id: 'hashtags',
+      label: 'Top Hashtags',
+      component: <TopHashtags />,
+      input: true,
+      description: 'Lists the most frequently used hashtags, counting each occurrence.'
+    },
+    {
+      id: 'cycles',
+      label: 'User Reply Cycles',
+      component: <UserReplyCycles />,
+      input: false,
+      description: 'Finds a group of 3 users who replied to each other in a full cycle.'
+    },
+    {
+      id: 'engagement',
+      label: 'Verified Engagement',
+      component: <VerifiedUserEngagement />,
+      input: false,
+      description: 'Shows what percent of tweets by verified users are replies, retweets, or original posts.'
+    }
+  ];
 
   return (
     <div style={{
@@ -73,7 +113,12 @@ export default function HexGrid() {
                   onClick={() => handleCardClick(feature.id)}
                 >
                   <div style={{ transform: `rotate(${-rotation - index * 60}deg)` }}>
-                    <FeatureCard label={feature.label} active={activeCard === feature.id} />
+                    <FeatureCard
+                      label={feature.label}
+                      active={activeCard === feature.id}
+                      description={feature.description}
+                      onClick={() => handleCardClick(feature.id)}
+                    />
                   </div>
                 </div>
               ))}
@@ -98,6 +143,7 @@ export default function HexGrid() {
               {features.find((f) => f.id === activeCard)?.component}
             </div>
           )}
+          {!activeCard && <p>Please select a feature above.</p>}
         </div>
       </div>
 
