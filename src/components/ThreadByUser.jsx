@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 export default function ThreadByUser() {
   const [screenName, setScreenName] = useState('');
@@ -11,12 +12,22 @@ export default function ThreadByUser() {
   ];
 
   const handleSearch = async () => {
+    if (!screenName.trim()) return;
     setLoading(true);
-    setTimeout(() => {
-      setResults(mockData);
+  
+    try {
+      const response = await axios.get(`/api/thread-by-user`, {
+        params: { screen_name: screenName }
+      });
+      setResults(response.data);
+    } catch (error) {
+      console.error("Failed to fetch thread data:", error);
+      setResults([]);
+    } finally {
       setLoading(false);
-    }, 500);
+    }
   };
+  
 
   return (
     <div style={{ padding: '1rem', backgroundColor: '#fff', borderRadius: '12px', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}>
@@ -53,25 +64,28 @@ export default function ThreadByUser() {
       </div>
 
       {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <ul style={{ listStyle: 'none', padding: 0 }}>
-          {results.map((tweet, idx) => (
-            <li key={idx} style={{
-              marginBottom: '1rem',
-              backgroundColor: '#f9f9f9',
-              padding: '1rem',
-              borderRadius: '8px',
-              border: '1px solid #eee'
-            }}>
-              <strong>@{tweet.user.screen_name}</strong>: {tweet.text}
-              <div style={{ fontSize: '0.8rem', color: '#888', marginTop: '0.5rem' }}>
-                {new Date(tweet.created_at).toLocaleString()}
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
+  <p>Loading...</p>
+) : results.length === 0 ? (
+  <p style={{ color: '#888' }}>No thread found for this user.</p>
+) : (
+  <ul style={{ listStyle: 'none', padding: 0 }}>
+    {results.map((tweet, idx) => (
+      <li key={idx} style={{
+        marginBottom: '1rem',
+        backgroundColor: '#f9f9f9',
+        padding: '1rem',
+        borderRadius: '8px',
+        border: '1px solid #eee'
+      }}>
+        <strong>@{tweet.user.screen_name}</strong>: {tweet.text}
+        <div style={{ fontSize: '0.8rem', color: '#888', marginTop: '0.5rem' }}>
+          {new Date(tweet.created_at).toLocaleString()}
+        </div>
+      </li>
+    ))}
+  </ul>
+)}
+
     </div>
   );
 }
