@@ -82,9 +82,36 @@ export default function HexGrid() {
       fontFamily: 'Helvetica, Arial, sans-serif'
     }}>
       <div style={{ width: '100%', textAlign: 'center', marginBottom: '2rem' }}>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#333', textShadow: '1px 1px 2px rgba(0,0,0,0.1)' }}>
-          Eurovision Tweet Dashboard
-        </h1>
+      <div style={{
+  position: 'relative',
+  textAlign: 'center',
+  marginBottom: '2rem'
+}}>
+  <h1 style={{
+    fontSize: '2.8rem',
+    fontWeight: '900',
+    background: 'linear-gradient(to right, #4a00e0, #8e2de2)',
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    textShadow: '0 2px 10px rgba(0,0,0,0.15)',
+    margin: 0
+  }}>
+    🎤 Eurovision Tweet Dashboard
+  </h1>
+  <p style={{
+    marginTop: '0.5rem',
+    fontSize: '1rem',
+    color: '#666',
+    backdropFilter: 'blur(4px)',
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    padding: '0.3rem 0.8rem',
+    borderRadius: '8px',
+    display: 'inline-block'
+  }}>
+    Real-time Twitter insights from verified and active users.
+  </p>
+</div>
+
       </div>
 
       <div style={{
