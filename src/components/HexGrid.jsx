@@ -13,7 +13,6 @@ export default function HexGrid() {
   const [rotation, setRotation] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
-  // 让六边形持续旋转
   useEffect(() => {
     if (isPaused) return;
     const interval = setInterval(() => {
@@ -26,7 +25,6 @@ export default function HexGrid() {
     setActiveCard(id === activeCard ? null : id);
   };
 
-  // 在这里为每个卡片增加 description 提示
   const features = [
     {
       id: 'thread',
@@ -82,45 +80,31 @@ export default function HexGrid() {
       fontFamily: 'Helvetica, Arial, sans-serif'
     }}>
       <div style={{ width: '100%', textAlign: 'center', marginBottom: '2rem' }}>
-      <div style={{
-  position: 'relative',
-  textAlign: 'center',
-  marginBottom: '2rem'
-}}>
-  <h1 style={{
-    fontSize: '2.8rem',
-    fontWeight: '900',
-    background: 'linear-gradient(to right, #4a00e0, #8e2de2)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    textShadow: '0 2px 10px rgba(0,0,0,0.15)',
-    margin: 0
-  }}>
-    🎤 Eurovision Tweet Dashboard
-  </h1>
-  <p style={{
-    marginTop: '0.5rem',
-    fontSize: '1rem',
-    color: '#666',
-    backdropFilter: 'blur(4px)',
-    backgroundColor: 'rgba(255, 255, 255, 0.4)',
-    padding: '0.3rem 0.8rem',
-    borderRadius: '8px',
-    display: 'inline-block'
-  }}>
-    Real-time Twitter insights from verified and active users.
-  </p>
-</div>
-
+        <h1 style={{
+          fontSize: '5rem',
+          fontWeight: '900',
+          color: '#13294B',
+          margin: 0
+        }}>
+          KMY Eurovision Tweet Explorer
+        </h1>
+        <p style={{
+          marginTop: '3rem',
+          fontSize: '2.5rem',
+          fontWeight: '500',
+          color: '#FF6000',
+          lineHeight: '1.8',
+          letterSpacing: '0.5px'
+        }}>
+          Real-time Twitter queries from Eurovision 2018
+        </p>
       </div>
-
       <div style={{
         display: 'flex',
         justifyContent: 'space-around',
         alignItems: 'center',
         height: 'calc(100% - 6rem)',
       }}>
-        {/* 左边旋转组件 */}
         <div style={{ flex: '0 0 auto', width: '500px', height: '500px', marginRight: '2rem' }}>
           <div
             className="rotating-hexagon-outer"
@@ -153,7 +137,6 @@ export default function HexGrid() {
           </div>
         </div>
 
-        {/* 右边固定大小的外壳 */}
         <div style={{
           flex: '0 0 720px',
           height: '500px',
@@ -170,7 +153,16 @@ export default function HexGrid() {
               {features.find((f) => f.id === activeCard)?.component}
             </div>
           )}
-          {!activeCard && <p>Please select a feature above.</p>}
+          {!activeCard && (
+            <p style={{
+              fontSize: '2rem',
+              color: '#666',
+              textAlign: 'center'
+            }}>
+              Welcome! Please select a query on the left.
+            </p>
+          )}
+
         </div>
       </div>
 

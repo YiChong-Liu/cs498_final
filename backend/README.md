@@ -96,11 +96,21 @@ http://localhost:5000/api/thread-by-user?screen_name=<username>
 
 **Example:**
 
+A good example will be like the following: with a ***valid*** ***in_reply_to_status_id***.
+
 ![an example](img/example.jpg)
+
+A bad example will be like this: with a **null in_reply_to_status_id.**
+
+![example 2](img/example2.jpg)
 
 ```
 http://localhost:5000/api/thread-by-user?screen_name=Calciferex
 ```
+
+
+
+
 
 **What it does:** Returns all reply tweets by the given user, ordered by time.
 
