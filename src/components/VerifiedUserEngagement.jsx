@@ -124,7 +124,7 @@ export default function VerifiedUserEngagement() {
                   <p><strong>Reply:</strong> {user.reply_percentage}</p>
                   <p><strong>Retweet:</strong> {user.retweet_percentage}</p>
                 </div>
-                <div style={{ width: '120px', minWidth: '120px' }}>
+                <div style={{ width: '160px', minWidth: '160px' }}>
                   <Pie data={chartData} />
                 </div>
               </div>
