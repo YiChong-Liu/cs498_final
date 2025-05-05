@@ -81,7 +81,7 @@ export default function HexGrid() {
     }}>
       <div style={{ width: '100%', textAlign: 'center', marginBottom: '2rem' }}>
         <h1 style={{
-          fontSize: '5rem',
+          fontSize: '4rem',
           fontWeight: '900',
           color: '#13294B',
           margin: 0
@@ -89,7 +89,7 @@ export default function HexGrid() {
           KMY Eurovision Tweet Explorer
         </h1>
         <p style={{
-          marginTop: '3rem',
+          marginTop: '2rem',
           fontSize: '2.5rem',
           fontWeight: '500',
           color: '#FF6000',
@@ -153,15 +153,7 @@ export default function HexGrid() {
               {features.find((f) => f.id === activeCard)?.component}
             </div>
           )}
-          {!activeCard && (
-            <p style={{
-              fontSize: '2rem',
-              color: '#666',
-              textAlign: 'center'
-            }}>
-              Welcome! Please select a query on the left.
-            </p>
-          )}
+          {!activeCard && <p>Please select a feature on the left</p>}
 
         </div>
       </div>
