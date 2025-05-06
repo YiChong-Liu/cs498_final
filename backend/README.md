@@ -23,20 +23,24 @@ cs498_final/
 
 ## Step-by-Step Setup
 
-### 1. Clone the Repo
+### 1. Upload the dataset
+
+Under this directory, *euro_vision_cleaned_basic.json* is the dataset file after cleaning. You should upload it to MongoDB Atlas (recommend to use compass).
+
+### 2. Clone the Repo
 
 ```bash
 git clone https://github.com/YiChong-Liu/cs498_final.git
 cd cs498_final/backend
 ```
 
-### 2. Install Dependencies
+### 3. Install Dependencies
 
 ```bash
 npm install express mongodb dotenv cors
 ```
 
-### 3. Create a `.env` File
+### 4. Create a `.env` File
 
 Add your MongoDB URI in `backend/.env`:
 
@@ -46,7 +50,7 @@ MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/cs498_final
 
 Replace `<username>` and `<password>` with your actual MongoDB Atlas credentials.
 
-### 4. Ignore the .env File (important!)
+### 5. Ignore the .env File (important!)
 
 In `backend/.gitignore`, add:
 
@@ -54,7 +58,7 @@ In `backend/.gitignore`, add:
 .env
 ```
 
-### 5. Start the Server
+### 6. Start the Server
 
 ```bash
 node server.js
